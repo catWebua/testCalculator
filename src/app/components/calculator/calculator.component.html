@@ -1,1 +1,29 @@
-<p>calculator works!</p>
+<div>
+  <label for="amount">Amount:</label>
+  <input type="text" id="amount" [ngModel]="amount | number:'1.0-0':'en-US'" (ngModelChange)="amount = $event" (input)="formatAmount()" (keydown)="validateAmount($event)">
+  <button (click)="decreaseAmount()">-</button>
+  <button (click)="increaseAmount()">+</button>
+</div>
+<div>
+  <label for="currency">Currency?</label>
+  <input type="text" placeholder="Lorem" [(ngModel)]="searchText" (input)="filterCurrencies()">
+  <select id="currency" [(ngModel)]="selectedCurrency">
+    <option *ngFor="let currency of currencies" [ngValue]="currency">{{ currency.name }}</option>
+  </select>
+  <span>APR: {{ selectedCurrency.apr }}%</span>
+</div>
+
+<div>
+  <label for="period">Period?</label>
+  <select id="period" [(ngModel)]="selectedPeriod">
+    <option value="1">1 month</option>
+    <option value="3">3 months</option>
+    <option value="6">6 months</option>
+    <option value="12">12 months</option>
+    <option value="24">24 months</option>
+  </select>
+</div>
+<div>
+  <label for="profit">Profit?</label>
+  <span id="profit">{{ calculateProfit()| number:'1.0-0':'en-US' }}</span>
+</div>
