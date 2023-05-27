@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import {NgSelectModule, NgOption} from '@ng-select/ng-select';
 
 interface Currency {
   name: string;
   apr: number;
 }
-
 
 @Component({
   selector: 'app-calculator',
@@ -12,8 +12,10 @@ interface Currency {
   styleUrls: ['./calculator.component.scss']
 })
 export class CalculatorComponent {
-
+  toggleValue: boolean = false;
   amount: number = 1000;
+  isDropdownOpen: boolean = false;
+  isDropdownOpen1: boolean = false;
 
   currencies: Currency[] = [
     { name: 'TUSD (Test US Dollar)', apr: 15 },
@@ -22,6 +24,12 @@ export class CalculatorComponent {
     { name: 'TINR (Test Indian Rupee)', apr: 20 },
     { name: 'TBRL (Test Brazilian Real)', apr: 33 },
     { name: 'TIDR (Test Indonesian Rupiah)', apr: 21 },
+    { name: 'MKLH (Test US Dollar)', apr: 23 },
+    { name: 'YJIO (Test Euro)', apr: 16 },
+    { name: 'TCNY (Test Chinese Yuan)', apr: 10 },
+    { name: 'TINR (Test Indian Rupee)', apr: 30 },
+    { name: 'TBRL (Test Brazilian Real)', apr: 35 },
+    { name: 'TIDR (Test Indonesian Rupiah)', apr: 28 },
   ];
   selectedCurrency: Currency = this.currencies[0];
   selectedPeriod: number = 1;
@@ -36,7 +44,7 @@ export class CalculatorComponent {
   }
 
   formatAmount() {
-
+    // Implement the logic to format the amount
   }
 
   validateAmount(event: KeyboardEvent) {
@@ -69,10 +77,25 @@ export class CalculatorComponent {
     if (!selectedCurrency) {
       return 0;
     }
-
     const apr = selectedCurrency.apr;
     const monthlyRate = apr / 12;
     const totalProfit = this.amount * monthlyRate * this.selectedPeriod;
     return Number(totalProfit.toFixed(2));
+  }
+
+  updateSelectedCurrency(currency: Currency) {
+    this.selectedCurrency = currency;
+    this.isDropdownOpen1 = false;
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen1 = !this.isDropdownOpen1;
+  }
+  toggleDropdown1() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+  selectPeriod(period: number) {
+    this.selectedPeriod = period;
+    this.isDropdownOpen1 = false;
   }
 }
